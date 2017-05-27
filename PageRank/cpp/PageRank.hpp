@@ -88,9 +88,11 @@ public:
   void Run(int max_step, double alpha, double delt) {
     int num_step = 1;
     int num_finish = 0;
+    double error = 1000;
     clock_t start, end;
     start = clock();
-    while (num_finish < num_vertices_ && num_step <= max_step) {
+    while (error >= delt && num_step <= max_step) {
+      error = 0;
       cout << "iter: " << num_step << endl;
       num_finish = 0;
       unordered_map<int, double> new_vertices = vertices_;
@@ -101,11 +103,9 @@ public:
           new_vertices[v.first] += (1 - alpha) * vertices_[item.first]
                                 / adj_out_list_[item.first].size();
         }
-
-        if (abs(temp - new_vertices[v.first]) < delt) {
-          //  num_finish ++;
-        }
+        error += abs(new_vertices[v.first] - vertices_[v.first]);
       }
+      cout<<"error : "<<error<<endl;
       vertices_ = new_vertices;
       num_step ++;
       end = clock();
