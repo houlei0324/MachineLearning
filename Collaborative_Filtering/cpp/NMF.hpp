@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <utility>
 #include <stdlib.h> 
+#include <time.h>
 #include "Edge.hpp"
 using namespace std;
 class NMF {
@@ -30,8 +31,16 @@ public:
 	
 	//vi file
 	NMF(string _edgefile, string _vertexfile, int _max_iter, int _dim, double _alpha, double _beta, double _min_err): edgefile(_edgefile), vertexfile(_vertexfile), max_iter(_max_iter), dim(_dim), alpha(_alpha), beta(_beta), min_err(_min_err){
+		clock_t start, end;
+		start = clock();
 		readfile();
+		end = clock();
+		cout << "Loading time is " <<
+		     (double)(end - start) / (double)CLOCKS_PER_SEC << "s" << endl;
 		initPQ();
+		end = clock();
+		cout << "Init time is " <<
+		     (double)(end - start) / (double)CLOCKS_PER_SEC << "s" << endl;
 	}
 	
 	//param edges directly
@@ -175,14 +184,21 @@ public:
 	
 	//run NMF and return the result of userP and itemQ
 	void runNMF(unordered_map<int, vector<double>> &_userP, unordered_map<int, vector<double>> &_itemQ){
-		int step = 0;
+		int step = 1;
 		double err = INT_MAX;
+		clock_t start, end;
+		start = clock();
 		cout << "=========Iter has started========="<< endl;
-		while(step < max_iter && err > min_err){
+		while(step <= max_iter && err > min_err){
 			updatePQ();
-			err = getErr();
+			if (step == max_iter) {
+				err = getErr();
+			}
 			cout<<step<<" : "<<err<<endl;
 			step += 1;
+			end = clock();
+			cout << "run time is " <<
+		     (double)(end - start) / (double)CLOCKS_PER_SEC << "s" << endl;
 		}
 		cout << "========Iter has stopped==========" << endl;
 		_userP = userP;

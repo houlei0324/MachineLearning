@@ -96,7 +96,7 @@ def label_propagation(vector_dict, edge_dict):
             for node in vector_dict.keys():
                 adjacency_node_list = edge_dict[node]
                 vector_dict[node] = get_max_community_label(vector_dict, adjacency_node_list)
-            print vector_dict
+         #   print vector_dict
         else:
             break
     print t
@@ -104,7 +104,7 @@ def label_propagation(vector_dict, edge_dict):
 
 
 if __name__ == "__main__":
-    vector_dict, edge_dict=loadData("./polbooks.e")
+    vector_dict, edge_dict=loadData("../dataset/Amazon/amazon.e")
     print "original community: ", vector_dict
     vec_new = label_propagation(vector_dict, edge_dict)
     label = {}
@@ -115,6 +115,6 @@ if __name__ == "__main__":
             num += 1
     print "---------------------------------------------------------"
     print "the final result: "
-    for key in vec_new.keys():
-        print str(key) + " ---> " + str(vec_new[key])
+ #   for key in vec_new.keys():
+ #       print str(key) + " ---> " + str(vec_new[key])
     print num

@@ -3,9 +3,9 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-  string efile = "../dataset/web-Stanford.txt";
-  string result_file  = "./ranks.dat";
-  int max_step = 100;
+  string efile = argv[1];
+  int max_step = atoi(argv[2]);
+  string result_file  = "./pr_ranks.dat";
   double alpha = 0.15;
   double delt = 0.000001;
   PageRank pagerank(efile);

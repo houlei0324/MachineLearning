@@ -22,7 +22,7 @@ def preprocess(originfile,edgefile,vertexfile):
 			break
 
 		numline += 1
-		line = re.split(' |\n|\t',linee)
+		line = re.split(' |\n|\t|\r',linee)
 		if line[0] not in vertices.keys():
 			vertices[line[0]] = line[0]
 			save_vertices.append(line[0] + '\t' + line[0] + '\n')
@@ -46,9 +46,9 @@ def preprocess(originfile,edgefile,vertexfile):
 	
 if __name__ == '__main__':
 	print 'start to load data'
-	path = './Amazon'
-	originfile = path + '/com-amazon.ungraph.txt'
-	edgefile = path + '/com-amazon.ungraph.e'
-	vertexfile = path + '/com-amazon.ungraph.v'
+	path = './dblp'
+	originfile = path + '/com-dblp.ungraph.txt'
+	edgefile = path + '/dblp.e'
+	vertexfile = path + '/dblp.v'
 	preprocess(originfile, edgefile, vertexfile)
 print 'Finish !'
